@@ -182,7 +182,6 @@ public:
 		 float scaleX = width / dx;
 		 float scaleY = height / dy;
 		 scale = scaleX < scaleY ? scaleX : scaleY;
-		 scale = 0.03;
 	}
 };
 
