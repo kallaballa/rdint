@@ -23,6 +23,7 @@
 #include <sstream>
 #include <stdlib.h>
 #include <iostream>
+#include <SDL/SDL.h>
 #include <boost/lexical_cast.hpp>
 #include <boost/thread.hpp>
 #include <boost/thread/barrier.hpp>
@@ -56,6 +57,7 @@ public:
   void exec(string cmd, string param) {
     if (cmd.compare("help") == 0) {
      cerr << "run               continue processing the plot" << endl\
+    	  << "quit              exit the program" << endl\
           << "break <hexoff>    set a breakpoint at the given address" << endl\
           << "step  <num>       process the given number of operations" << endl\
           << "find <instr>      find the next occurence of the given instruction" << endl\
@@ -90,6 +92,11 @@ public:
           this->autoupdate = false;
           cerr << "=== auto update off" << endl;
         }
+      } else if (cmd.compare("quit") == 0) {
+    	SDL_Quit();
+    	exit(0);
+      } else {
+    	  cerr << "Unknown rdint command. Type 'help' for instructions." << endl;
       }
       //   else if(vplotter != NULL)
       //     vplotter->getCanvas()->update();

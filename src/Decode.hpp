@@ -142,7 +142,7 @@ struct ProcState {
 class VectorPlotter;
 class VectorPlotterProc: public ProcState {
 	VectorPlotter& vplot_;
-	float scale;
+	float scale = 0;
 public:
 	VectorPlotterProc(VectorPlotter& vplot) :
 			vplot_(vplot) {

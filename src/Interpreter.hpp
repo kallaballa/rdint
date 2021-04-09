@@ -40,10 +40,14 @@ public:
     RdInstr* rdInstr;
     VectorPlotterProc proc(*this->vectorPlotter);
     while (rdPlot->good() && (rdInstr = rdPlot->expectInstr())) {
-      if (Config::singleton()->debugLevel >= LVL_DEBUG || Config::singleton()->interactive) {
-        cerr << *rdInstr << " -> ";
-      }
       Debugger::getInstance()->announce(rdInstr);
+      if (Config::singleton()->debugLevel >= LVL_DEBUG || Config::singleton()->interactive) {
+        cerr << *rdInstr << " -> " << std::hex << std::setfill('0') << std::setw(2) << (0xFF & (int)rdInstr->command.at(0)) << " ";
+        for(auto& c : rdInstr->data) {
+        	cerr << (int)c;
+        }
+        cerr << endl;
+      }
       std::vector<uint8_t> data;
       data.push_back(rdInstr->command.at(0));
       for(auto& b : rdInstr->data){
@@ -51,9 +55,9 @@ public:
       }
 
       CmdBase* cmd = parseCommand(data);
-      std::vector<Param> params = cmd->getParams();
-      std::cerr << cmd->toString() << std::endl;
+      std::cerr << cmd->toString() << std::endl << '>';
       cmd->process(proc);
+
     }
   }
 };
