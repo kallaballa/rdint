@@ -1,6 +1,17 @@
 #ifndef SRC_DECODE_HPP_
 #define SRC_DECODE_HPP_
 
+enum COLORS {
+	BLACK = 30,
+	RED = 31,
+	GREEN = 32,
+	YELLOW = 33,
+	BLUE = 34,
+	PINK = 35,
+	CYAN = 36,
+	WHITE = 37,
+	NORMAL = 39
+};
 using std::string;
 typedef std::vector<uint8_t> Data;
 
@@ -171,6 +182,7 @@ public:
 		 float scaleX = width / dx;
 		 float scaleY = height / dy;
 		 scale = scaleX < scaleY ? scaleX : scaleY;
+		 scale = 0.03;
 	}
 };
 
@@ -184,7 +196,7 @@ struct CmdBase {
 
 	virtual void process(ProcState& procState) = 0;
 	virtual void calcStats(Stats& stats) = 0;
-	virtual string getHtmlColor() = 0;
+	virtual COLORS getColor() = 0;
 	virtual string getName() = 0;
 	virtual std::vector<Param> getParams() = 0;
 

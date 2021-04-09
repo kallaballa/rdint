@@ -15,8 +15,18 @@
 using std::string;
 using std::stringstream;
 
+
 class Interpreter {
+
 private:
+	string make_color(const string& s, const COLORS& c) {
+	  return "\033[0;" + std::to_string(c) + "m" + s + "\033[0;39m";
+	}
+
+	string make_bold(const string& s) {
+	  return "\033[1m" + s + "\033[0m";
+	}
+
   dim width;
   dim height;
 
@@ -55,7 +65,7 @@ public:
       }
 
       CmdBase* cmd = parseCommand(data);
-      std::cerr << cmd->toString() << std::endl << '>';
+      std::cerr << make_color(cmd->toString(), cmd->getColor()) << std::endl << '>';
       cmd->process(proc);
 
     }
