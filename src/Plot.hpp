@@ -36,15 +36,21 @@ private:
 
   std::map<string, RdInstr*> settings;
 
+  uint8_t descramble(uint8_t s) {
+   uint8_t a = (s + 0xFF) & 0xFF;
+   uint8_t b = a ^ 0x33;
+   uint8_t p = b & 0x7E | b >> 7 & 0x01 | b << 7 & 0x80;
+   return p;
+  }
 
   RdInstr* readInstr() {
     off64_t off = this->inputfile->tellg();
-    uint8_t c = this->inputfile->get();
+    uint8_t c = descramble(this->inputfile->get());
     assert(c >= 0x80);
     RdInstr* instr = new RdInstr(off);
     instr->command = c;
 
-    while(this->inputfile->good() && (c = this->inputfile->get()) < 0x80) {
+    while(this->inputfile->good() && (c = descramble(this->inputfile->get())) < 0x80) {
     	instr->data.push_back(c);
     }
 
