@@ -69,6 +69,9 @@ public:
       cmd->process(proc);
 
     }
+    std::cerr << make_bold("End of file. Type any key to exit.") << std::endl;
+    char c;
+    std::cin.read(&c, 1);
   }
 };
 
