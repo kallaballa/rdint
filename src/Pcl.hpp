@@ -5,6 +5,8 @@
 #include <string.h>
 #include <list>
 #include <iostream>
+#include <iomanip>
+
 #include <boost/format.hpp>
 #include "2D.hpp"
 #include "Config.hpp"
@@ -25,6 +27,11 @@ typedef off_t off64_t;
 const uint8_t MAGIC[2] = { 0xd8, 0x12};
 
 class RdInstr {
+	string byteToHexString(const uint8_t& b) {
+		std::stringstream ss;
+		ss << std::hex << std::setw(2) << std::setfill('0') << (int) b;
+		return ss.str();
+	}
 public:
   RdInstr(off64_t file_off) : command(), data(), file_off(file_off) {}
   string command;
@@ -32,7 +39,7 @@ public:
   off64_t file_off;
 
   bool matches(const string& sig, const bool report=false) {
-    bool m = this->command == sig;
+    bool m = byteToHexString(this->command.at(0)) == sig;
     if(!m && report && Config::singleton()->debugLevel >= LVL_WARN) {
       cerr << "expected: " << sig << " found: " << this->command << endl;
     }
