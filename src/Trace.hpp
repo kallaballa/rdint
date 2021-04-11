@@ -20,8 +20,8 @@ public:
 
   void logInstr(RdInstr* instr);
   void logPlotterStat(Point &penPos);
-  list<RdInstr*>::iterator backlogIterator();
-  list<RdInstr*>::iterator backlogEnd();
+  std::list<RdInstr*>::iterator backlogIterator();
+  std::list<RdInstr*>::iterator backlogEnd();
   void info(string msg);
   void warn(string msg);
   void debug(string msg);

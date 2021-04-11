@@ -1,6 +1,6 @@
 TARGET := rdint
 
-SRCS    := rdint.cpp SDLCanvas.cpp Canvas.cpp Decode.cpp Terminal.cpp Trace.cpp
+SRCS    := rdint.cpp SDLCanvas.cpp Canvas.cpp Decode.cpp Terminal.cpp Trace.cpp Config.cpp Pcl.cpp
 
 #precompiled headers
 HEADERS := 

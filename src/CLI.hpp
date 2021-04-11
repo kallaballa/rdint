@@ -23,6 +23,7 @@
 #include <sstream>
 #include <stdlib.h>
 #include <iostream>
+#include <list>
 #include <SDL/SDL.h>
 #include <boost/lexical_cast.hpp>
 #include <boost/thread.hpp>
@@ -35,6 +36,7 @@ using std::cout;
 using std::cerr;
 using std::endl;
 using std::string;
+using std::list;
 using std::stringstream;
 using boost::lexical_cast;
 

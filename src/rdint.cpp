@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <iostream>
 #include <fstream>
-#include "CImg.hpp"
 #include "Interpreter.hpp"
 #include "2D.hpp"
 #include "Plotter.hpp"
@@ -23,22 +22,6 @@ using std::endl;
 
 using namespace cimg_library;
 
-Config* Config::instance = NULL;
-
-Config* Config::singleton() {
-  if (instance == NULL)
-    instance = new Config();
-
-  return instance;
-}
-
-Trace* Trace::instance = NULL;
-Trace* Trace::singleton() {
-  if (instance == NULL)
-    instance = new Trace();
-
-  return instance;
-}
 
 Debugger* Debugger::instance = NULL;
 class VectorPlotter;
