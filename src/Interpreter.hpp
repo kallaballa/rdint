@@ -53,7 +53,6 @@ public:
       CmdBase* cmd = parseCommand(data);
       std::cerr << make_color(cmd->toString(), cmd->getColor()) << std::endl << '>';
       cmd->process(proc);
-
     }
     std::cerr << make_bold("End of file. Type any key to exit.") << std::endl;
     char c;
