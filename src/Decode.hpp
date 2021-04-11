@@ -8,10 +8,10 @@
 using namespace std;
 typedef std::vector<uint8_t> Data;
 
-static string byteToHexString(const uint8_t& b);
-static float fixed(float var, int roundDigits);
-static uint64_t parseUnsignedValue(const Data& data);
-static int64_t parseSignedValue(const Data& data);
+string byteToHexString(const uint8_t& b);
+float fixed(float var, int roundDigits);
+uint64_t parseUnsignedValue(const Data& data);
+int64_t parseSignedValue(const Data& data);
 
 struct Param {
 	string name_;
