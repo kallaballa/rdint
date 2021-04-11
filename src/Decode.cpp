@@ -50,7 +50,7 @@ struct CmdEmpty: CmdBase {
 	virtual void calcStats(Stats& stats) override {
 		++stats.empty;
 	}
-	virtual COLORS getColor() override {
+	virtual TERM_COLORS getColor() override {
 		return RED;
 	}
 	virtual string getName() override {
@@ -75,7 +75,7 @@ struct CmdGood: CmdBase {
 	virtual void calcStats(Stats& stats) override {
 		++stats.good;
 	}
-	virtual COLORS getColor() override {
+	virtual TERM_COLORS getColor() override {
 		return GREEN;
 	}
 	virtual void process(ProcState& procState) override {
@@ -93,7 +93,7 @@ struct CmdIncomplete: CmdBase {
 	virtual void calcStats(Stats& stats) override {
 		++stats.incomplete;
 	}
-	virtual COLORS getColor() override {
+	virtual TERM_COLORS getColor() override {
 		return PINK;
 	}
 	virtual string getName() override {
@@ -118,7 +118,7 @@ struct CmdUnknown: CmdBase {
 	virtual void calcStats(Stats& stats) override {
 		++stats.unknown;
 	}
-	virtual COLORS getColor() override {
+	virtual TERM_COLORS getColor() override {
 		return YELLOW;
 	}
 	virtual string getName() override {

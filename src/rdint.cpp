@@ -67,17 +67,17 @@ int main(int argc, char *argv[]) {
   Config* config = Config::singleton();
   config->parseCommandLine(argc, argv);
   ifstream *infile = new ifstream(config->ifilename, ios::in | ios::binary);
-  Plot* plot = new Plot(infile);
-  Statistic::init(plot->getWidth(), plot->getHeight(), plot->getResolution());
+  RdPlot* plot = new RdPlot(infile);
+  Statistic::init(1300, 900, 100);
 
-  Interpreter intr(plot);
+  Interpreter intr;
   if (config->interactive) {
     Debugger::create(intr.vectorPlotter);
     Debugger::getInstance()->setInteractive(true);
   } else
     Debugger::create();
 
-  intr.renderRdPlot(plot->currentPclPlot);
+  intr.run(plot);
 
   BoundingBox& vBox = intr.vectorPlotter->getBoundingBox();
   if (vBox.isValid()) {
@@ -87,17 +87,17 @@ int main(int argc, char *argv[]) {
     trace->warn("Vector image is empty.");
   }
 
-  BoundingBox& bmpBox = intr.bitmapPlotter->getBoundingBox();
-  if (bmpBox.isValid()) {
-    if (config->rasterFilename != NULL)
-      intr.bitmapPlotter->dumpCanvas(string(config->rasterFilename));
-  } else {
-    trace->warn("Bitmap image is empty.");
-  }
+//  BoundingBox& bmpBox = intr.bitmapPlotter->getBoundingBox();
+//  if (bmpBox.isValid()) {
+//    if (config->rasterFilename != NULL)
+//      intr.bitmapPlotter->dumpCanvas(string(config->rasterFilename));
+//  } else {
+//    trace->warn("Bitmap image is empty.");
+//  }
 
   if (config->debugLevel >= LVL_INFO) {
     Statistic::singleton()->printSlot(cout, SLOT_VECTOR);
-    Statistic::singleton()->printSlot(cout, SLOT_RASTER);
+//    Statistic::singleton()->printSlot(cout, SLOT_RASTER);
   }
 
   return 0;

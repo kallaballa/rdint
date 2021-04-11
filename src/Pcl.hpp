@@ -23,9 +23,6 @@ using boost::format;
 typedef off_t off64_t;
 #endif
 
-#define MAGIC_SIZE 2
-const uint8_t MAGIC[2] = { 0xd8, 0x12};
-
 class RdInstr {
 	string byteToHexString(const uint8_t& b) {
 		std::stringstream ss;

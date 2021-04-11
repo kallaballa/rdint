@@ -6,30 +6,17 @@
 #include <iostream>
 #include <sstream>
 #include "Pcl.hpp"
-#include "Plot.hpp"
 #include "CLI.hpp"
 #include "Config.hpp"
 #include "Plotter.hpp"
 #include "Decode.hpp"
+#include "RdPlot.hpp"
 
 using std::string;
 using std::stringstream;
 
-
 class Interpreter {
-
 private:
-	string make_color(const string& s, const COLORS& c) {
-	  return "\033[0;" + std::to_string(c) + "m" + s + "\033[0;39m";
-	}
-
-	string make_bold(const string& s) {
-	  return "\033[1m" + s + "\033[0m";
-	}
-
-  dim width;
-  dim height;
-
   RdInstr* nextRdInstr(RdPlot* rdPlot, const char* expected = NULL) {
     RdInstr* instr = rdPlot->expectInstr(expected);
     Debugger::getInstance()->announce(instr);
@@ -37,17 +24,16 @@ private:
   }
 
 public:
-  VectorPlotter* vectorPlotter;
-  BitmapPlotter* bitmapPlotter;
-  Plot* rtlplot;
+  VectorPlotter* vectorPlotter = nullptr;
+//  BitmapPlotter* bitmapPlotter = nullptr;
 
-  Interpreter(Plot* plot): width(0), height(0), bitmapPlotter(NULL), rtlplot(plot){
-    this->bitmapPlotter = new BitmapPlotter(plot->getWidth()/8, plot->getHeight(), Config::singleton()->clip);
-    this->vectorPlotter = new VectorPlotter(plot->getWidth(),plot->getHeight(), Config::singleton()->clip);
+  Interpreter()  {
+//    this->bitmapPlotter = new BitmapPlotter(plot->getWidth()/8, plot->getHeight(), Config::singleton()->clip);
   };
 
-  void renderRdPlot(RdPlot *rdPlot) {
+  void run(RdPlot *rdPlot) {
     RdInstr* rdInstr;
+    this->vectorPlotter = new VectorPlotter(1300,900, Config::singleton()->clip);
     VectorPlotterProc proc(*this->vectorPlotter);
     while (rdPlot->good() && (rdInstr = rdPlot->expectInstr())) {
       Debugger::getInstance()->announce(rdInstr);

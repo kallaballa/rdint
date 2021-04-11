@@ -27,8 +27,8 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/thread.hpp>
 #include <boost/thread/barrier.hpp>
-#include "Plot.hpp"
 #include "CImg.hpp"
+#include "RdPlot.hpp"
 
 using std::cin;
 using std::cout;
