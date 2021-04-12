@@ -5,11 +5,11 @@
 #include <string>
 #include <iostream>
 #include <sstream>
-#include "Pcl.hpp"
 #include "CLI.hpp"
 #include "Config.hpp"
 #include "Plotter.hpp"
 #include "Decode.hpp"
+#include "RdInstr.hpp"
 #include "RdPlot.hpp"
 
 using std::string;
@@ -61,11 +61,11 @@ public:
 		NullProcState nullPs;
 		std::vector<RdInstr> header;
 		while (rdPlot->good() && (rdInstr = rdPlot->expectInstr()) != nullptr) {
-			if (rdInstr->matches("\x88\x00"))
-				break;
-
 			header.push_back(*rdInstr);
 			applyCommand(rdInstr, &nullPs);
+
+			if (rdInstr->matches("88"))
+				break;
 		}
 
 		if (rdInstr == nullptr) {

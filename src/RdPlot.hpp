@@ -72,7 +72,7 @@ public:
 
 	void invalidate(string msg) {
 		this->valid = false;
-		Trace::singleton()->printBacklog(cerr, "PCL", msg);
+		Trace::singleton()->printBacklog(cerr, "RD", msg);
 	}
 
 	bool good() const {

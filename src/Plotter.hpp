@@ -1,9 +1,7 @@
 #ifndef PLOTTER_H_
 #define PLOTTER_H_
-#include <map>
 #include <iostream>
-#include <stdint.h>
-#include <cctype>
+#include <cstdint>
 #include <sstream>
 #include <string>
 #include <limits>
