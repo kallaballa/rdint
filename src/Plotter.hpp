@@ -47,6 +47,10 @@ public:
     clip(clip), down(false), canvas(NULL), penPos(0, 0) {
   }
 
+  bool isPenDown() {
+	  return down;
+  }
+
   void penUp() {
     down = false;
     Statistic::singleton()->announcePenUp(SLOT_VECTOR);

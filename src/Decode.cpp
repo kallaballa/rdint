@@ -589,10 +589,20 @@ CmdBase* parseCommand(Data& data) {
 
 void VectorProcState::cut(const coord& x1, const coord& y1, const coord& x2,
 		const coord& y2) {
-	vplot_.move(x1 * scale, y1 * scale);
-	vplot_.penDown();
-	vplot_.move(x2 * scale, y2 * scale);
-	vplot_.penUp();
+	coord xs1 = x1 * scale;
+	coord ys1 = y1 * scale;
+	coord xs2 = x2 * scale;
+	coord ys2 = y2 * scale;
+
+	if(vplot_.penPos != Point(xs1, ys1)) {
+		if(vplot_.isPenDown())
+			vplot_.penUp();
+
+		vplot_.move(xs1, ys1);
+	}
+
+	if(!vplot_.isPenDown())
+		vplot_.penDown();
+
+	vplot_.move(xs2, ys2);
 }
-
-
