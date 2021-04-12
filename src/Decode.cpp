@@ -14,10 +14,13 @@ string byteToHexString(const uint8_t& b) {
 	return ss.str();
 }
 
-float fixed(float var, int roundDigits) {
+string makeFixedFloatString(float var, int roundDigits) {
 	float f = pow(10, roundDigits);
 	float value = (int) (var * f + .5);
-	return (float) value / 100;
+	string strVal = std::to_string(value / 100.0);
+	assert(strVal.size() > 4);
+	strVal = strVal.substr(0, strVal.size() - 4);
+	return strVal;
 }
 
 uint64_t parseUnsignedValue(const Data& data) {

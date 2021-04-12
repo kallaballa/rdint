@@ -125,7 +125,7 @@ public:
 
   void checkSignatures(RdInstr *instr) {
     if (find.length() > 0 && instr && instr->matches(find)) {
-      cerr << "=== found " << (char *) instr << endl;
+      cerr << "=== found " << find << endl;
       setInteractive(true);
       this->step_barrier.wait();
     }

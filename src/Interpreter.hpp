@@ -37,10 +37,9 @@ public:
 		if (Config::singleton()->debugLevel >= LVL_DEBUG
 				|| Config::singleton()->interactive) {
 			cerr << *rdInstr << " -> " << std::hex << std::setfill('0')
-					<< std::setw(2) << (0xFF & (int) rdInstr->command.at(0))
-					<< " ";
+					<< std::setw(2) << (0xFF & (int) rdInstr->command.at(0));
 			for (auto& c : rdInstr->data) {
-				cerr << (int) c;
+				cerr << " " << std::setw(2) << (int) c;
 			}
 			cerr << endl;
 		}
