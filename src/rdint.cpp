@@ -22,7 +22,6 @@ using std::endl;
 
 using namespace cimg_library;
 
-
 Debugger* Debugger::instance = NULL;
 class VectorPlotter;
 void Debugger::create(void *vplotter) {
@@ -51,7 +50,6 @@ int main(int argc, char *argv[]) {
   config->parseCommandLine(argc, argv);
   ifstream *infile = new ifstream(config->ifilename, ios::in | ios::binary);
   RdPlot* plot = new RdPlot(infile);
-  Statistic::init(1300, 900, 100);
 
   Interpreter intr;
   if (config->interactive) {

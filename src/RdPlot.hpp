@@ -12,7 +12,11 @@ class RdPlot {
 private:
 	static constexpr size_t RD_MAGIC_SIZE = 2;
 	static constexpr uint8_t RD_MAGIC[RD_MAGIC_SIZE] = { 0xd8, 0x12 };
+	static constexpr size_t ABS_MOVE_MAGIC_SIZE = 2;
+	static constexpr uint8_t ABS_MOVE_MAGIC[RD_MAGIC_SIZE] = { 0x88, 0x00 };
+
 	static constexpr uint8_t SCRAMBLE_MAGIC = 0x33;
+
 	std::ifstream* inputfile;
 	off64_t eof;
 	bool valid;
@@ -75,7 +79,7 @@ public:
 		return this->valid && this->inputfile->good();
 	}
 
-	RdInstr* expectInstr(const char * expected = NULL) {
+	RdInstr* expectInstr(const char * expected = nullptr) {
 		if (!this->isValid())
 			return NULL;
 

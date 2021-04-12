@@ -158,7 +158,7 @@ struct CmdCoords: CmdGood {
 	}
 
 	virtual void process(ProcState& procState) override {
-		procState.setLimits(isMax, x, y);
+		procState.setLimits(isMax, x / 100.0, y / 100.0);
 	}
 };
 
@@ -587,7 +587,7 @@ CmdBase* parseCommand(Data& data) {
   return new CmdUnknown(data);
 }
 
-void VectorPlotterProc::cut(const coord& x1, const coord& y1, const coord& x2,
+void VectorProcState::cut(const coord& x1, const coord& y1, const coord& x2,
 		const coord& y2) {
 	vplot_.move(x1 * scale, y1 * scale);
 	vplot_.penDown();

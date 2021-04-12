@@ -143,12 +143,50 @@ struct ProcState {
 	}
 };
 
+class NullProcState: public ProcState {
+	float scale = 0;
+public:
+	NullProcState() {
+	}
+
+	virtual void cut(const coord& x1, const coord& y1, const coord& x2,
+			const coord& y2) override {
+	}
+
+	virtual void setLimits(const bool& isMax, const coord& x, const coord& y)
+			override {
+		if (isMax) {
+			maxX = x;
+			maxY = y;
+		} else {
+			minX = x;
+			minY = y;
+		}
+		std::cerr << "MAXX: " << maxX << std::endl;
+		 float dx = maxX - minX;
+		 float dy = maxY - minY;
+		 if (dx < 1) { dx = 1; }
+		 if (dy < 1) { dy = 1; }
+		 if(Config::singleton()->screenSize != nullptr) {
+			 float width = Config::singleton()->screenSize->ul.x;
+			 float height = Config::singleton()->screenSize->ul.y;
+
+			 float scaleX = width / dx;
+			 float scaleY = height / dy;
+			 scale = scaleX < scaleY ? scaleX : scaleY;
+			 scale /= 100;
+		 } else {
+			 scale = 0.01;
+		 }
+	}
+};
+
 class VectorPlotter;
-class VectorPlotterProc: public ProcState {
+class VectorProcState: public ProcState {
 	VectorPlotter& vplot_;
 	float scale = 0;
 public:
-	VectorPlotterProc(VectorPlotter& vplot) :
+	VectorProcState(VectorPlotter& vplot) :
 			vplot_(vplot) {
 	}
 
@@ -169,13 +207,18 @@ public:
 		 float dy = maxY - minY;
 		 if (dx < 1) { dx = 1; }
 		 if (dy < 1) { dy = 1; }
-		 float width = Config::singleton()->screenSize->ul.x;
-		 float height = Config::singleton()->screenSize->ul.y;
 
-		 float scaleX = width / dx;
-		 float scaleY = height / dy;
-		 scale = scaleX < scaleY ? scaleX : scaleY;
-		 scale /= 10.0;
+		 if(Config::singleton()->screenSize != nullptr) {
+			 float width = Config::singleton()->screenSize->ul.x;
+			 float height = Config::singleton()->screenSize->ul.y;
+
+			 float scaleX = width / dx;
+			 float scaleY = height / dy;
+			 scale = scaleX < scaleY ? scaleX : scaleY;
+			 scale /= 100;
+		 } else {
+			 scale = 0.01;
+		 }
 	}
 };
 
