@@ -57,7 +57,7 @@ struct CmdEmpty: CmdBase {
 		return RED;
 	}
 	virtual string getName() override {
-		return "empty command";
+		return "Empty command";
 	}
 	virtual std::vector<Param> getParams() {
 		return {};
@@ -100,7 +100,7 @@ struct CmdIncomplete: CmdBase {
 		return PINK;
 	}
 	virtual string getName() override {
-		return "incomplete command";
+		return "Incomplete command";
 	}
 	virtual std::vector<Param> getParams() {
 		return {};
@@ -125,7 +125,7 @@ struct CmdUnknown: CmdBase {
 		return YELLOW;
 	}
 	virtual string getName() override {
-		return "unknown command";
+		return "Unknown command";
 	}
 
 	virtual std::vector<Param> getParams() {
@@ -151,7 +151,7 @@ struct CmdCoords: CmdGood {
 	}
 
 	virtual string getName() override {
-		return string() + (isMax ? "max" : "min") + "imum absolute coordinates";
+		return string() + (isMax ? "Max" : "Min") + "imum absolute coordinates";
 	}
 	virtual std::vector<Param> getParams() override {
 		return {
@@ -177,7 +177,7 @@ struct CmdCutMoveAbs: CmdGood {
 	}
 
 	virtual string getName() override {
-		return string() + (isCut ? "cut" : "move") + " to absolute position";
+		return string() + (isCut ? "Cut" : "Move") + " to absolute position";
 	}
 	virtual std::vector<Param> getParams() override {
 		return {
@@ -206,7 +206,7 @@ struct CmdCutMoveRel: CmdGood {
 		y = parseSignedValue(Data(data.begin() + 3, data.begin() + 5));
 	}
 	virtual string getName() {
-		return string() + (isCut ? "cut" : "move") + " to relative position";
+		return string() + (isCut ? "Cut" : "Move") + " to relative position";
 	}
 	virtual std::vector<Param> getParams() {
 		return {
@@ -234,7 +234,7 @@ struct CmdCutMoveRel1: CmdGood {
 		xy = parseSignedValue(Data(data.begin() + 1, data.begin() + 3));
 	}
 	virtual string getName() override {
-		return string() + (isCut ? "cut" : "move") + " to relative position in "
+		return string() + (isCut ? "Cut" : "Move") + " to relative position in "
 				+ (isY ? "Y" : "X") + " direction";
 	}
 	virtual std::vector<Param> getParams() override {
@@ -262,7 +262,7 @@ struct CmdEnableDisable: CmdGood {
 		airBlower = (devices & 0x01) != 0;
 	}
 	virtual string getName() override {
-		return "enable / disable helper devices";
+		return "Enable / Disable helper devices";
 	}
 
 	virtual std::vector<Param> getParams() override {
@@ -291,7 +291,7 @@ struct CmdSetColorLayer: CmdGood {
 		blue = color >> 16 & 0xFF;
 	}
 	virtual string getName() override {
-		return "set color for layer";
+		return "Set color for layer";
 	}
 	virtual std::vector<Param> getParams() override {
 		return {
@@ -313,7 +313,7 @@ struct CmdSetCurLayer: CmdGood {
 		layer = parseUnsignedValue(Data(data.begin() + 2, data.begin() + 3));
 	}
 	virtual string getName() override {
-		return "set current layer";
+		return "Set current layer";
 	}
 	virtual std::vector<Param> getParams() override {
 		return {
@@ -332,7 +332,7 @@ struct CmdSetMaxLayer: CmdGood {
 		layer = parseUnsignedValue(Data(data.begin() + 2, data.begin() + 3));
 	}
 	virtual string getName() override {
-		return "set maximum layer number";
+		return "Set maximum layer number";
 	}
 	virtual std::vector<Param> getParams() override {
 		return {
@@ -356,7 +356,7 @@ struct CmdSetPwr: CmdGood {
 	}
 
 	virtual string getName() override {
-		return string() + "set " + (isMax ? "max" : "min")
+		return string() + "Set " + (isMax ? "max" : "min")
 				+ "imum power for laser " + std::to_string(laserNo);
 	}
 
@@ -383,7 +383,7 @@ struct CmdSetPwrLayer : CmdGood {
     pwr = parseUnsignedValue(Data(data.begin() + 3, data.begin() + 5));
   }
   virtual string getName() override {
-    return string() + "set " + (isMax ? "max" : "min") + "imum power for laser "
+    return string() + "Set " + (isMax ? "max" : "min") + "imum power for laser "
            + std::to_string(laserNo) + " for layer";
   }
 
@@ -404,7 +404,7 @@ CmdSetSpeed(Data& data) : CmdGood(data) {
     speed = parseUnsignedValue(Data(data.begin() + 2, data.begin() + 7));
   }
   virtual string getName() override {
-    return "set speed";
+    return "Set speed";
   }
   virtual std::vector<Param> getParams() override {
     return {
@@ -425,7 +425,7 @@ struct CmdSetSpeedLayer : CmdGood {
   }
 
   virtual string getName() override {
-    return "set speed for layer";
+    return "Set speed for layer";
   }
   virtual std::vector<Param> getParams() override {
     return {

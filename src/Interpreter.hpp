@@ -32,10 +32,10 @@ public:
 	}
 	;
 
-	void applyCommand(RdInstr* rdInstr, ProcState* procState) {
+	void applyCommand(RdInstr* rdInstr, ProcState* procState, bool print = true) {
 		Debugger::getInstance()->announce(rdInstr);
-		if (Config::singleton()->debugLevel >= LVL_DEBUG
-				|| Config::singleton()->interactive) {
+		if (print && (Config::singleton()->debugLevel >= LVL_DEBUG
+				|| Config::singleton()->interactive)) {
 			cerr << *rdInstr << " -> " << std::hex << std::setfill('0')
 					<< std::setw(2) << (0xFF & (int) rdInstr->command.at(0));
 			for (auto& c : rdInstr->data) {
@@ -50,8 +50,8 @@ public:
 		}
 
 		CmdBase* cmd = parseCommand(data);
-		std::cerr << make_color(cmd->toString(), cmd->getColor()) << std::endl
-				<< '>';
+		if(print)
+			std::cerr << "  " << make_color(cmd->toString(), cmd->getColor()) << std::endl << "> ";
 		cmd->process(*procState);
 	}
 
@@ -61,7 +61,7 @@ public:
 		std::vector<RdInstr> header;
 		while (rdPlot->good() && (rdInstr = rdPlot->expectInstr()) != nullptr) {
 			header.push_back(*rdInstr);
-			applyCommand(rdInstr, &nullPs);
+			applyCommand(rdInstr, &nullPs, false);
 
 			if (rdInstr->matches("88"))
 				break;
