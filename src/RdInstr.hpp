@@ -30,7 +30,7 @@ public:
   static const string pretty(char c);
   friend ostream& operator <<(ostream &os, const RdInstr &instr) {
 	std::stringstream ss;
-	ss << std::hex << "0x" << std::setw(8) << std::setfill('0') << instr.file_off;
+	ss << std::hex << "(" << std::setw(8) << std::setfill('0') << instr.file_off << ")";
 	return os << ss.str();
   }
 };
