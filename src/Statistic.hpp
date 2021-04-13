@@ -3,7 +3,6 @@
 
 #include <assert.h>
 #include "2D.hpp"
-#include <boost/format.hpp>
 
 enum STAT_SLOT { SLOT_RASTER, SLOT_VECTOR, SLOT_GLOBAL };
 enum STAT_UNIT { UNIT_MM, UNIT_IN, UNIT_PPT };
@@ -145,9 +144,9 @@ public:
       break;
     }
 
-    os << slotName << "\t| work length=" << format("%f") % getWorkLength(slot,unit) << endl;
-    os << slotName << "\t| move length=" << format("%f") % getMoveLength(slot,unit) << endl;
-    os << slotName << "\t| total length=" << format("%f") % getTotalLength(slot,unit) << endl;
+    os << slotName << "\t| work length=" <<  getWorkLength(slot,unit) << endl;
+    os << slotName << "\t| move length=" <<  getMoveLength(slot,unit) << endl;
+    os << slotName << "\t| total length=" << getTotalLength(slot,unit) << endl;
     os << slotName << "\t| penUp count=" << getPenUpCount(slot) << endl;
     os << slotName << "\t| penDown count=" << getPenDownCount(slot) << endl;
     os << slotName << "\t| segment count=" << getSegmentCount(slot) << endl;

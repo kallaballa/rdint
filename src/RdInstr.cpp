@@ -2,7 +2,6 @@
 #include <cstring>
 #include <iostream>
 #include <iomanip>
-#include <boost/format.hpp>
 #include "Config.hpp"
 
 using std::cout;
@@ -10,7 +9,6 @@ using std::cerr;
 using std::endl;
 using std::string;
 using std::ostream;
-using boost::format;
 
 #include "RdInstr.hpp"
 
@@ -32,12 +30,4 @@ bool RdInstr::matches(const string& sig, const bool report) {
 	}
 	return m;
 }
-
-const string RdInstr::pretty(char c) {
-	if (!isgraph(c))
-		return (format("(0x%02X)") % c).str();
-	else
-		return (format("%c") % c).str();
-}
-
 

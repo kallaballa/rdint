@@ -20,7 +20,6 @@
 #ifndef TWOD_H_
 #define TWOD_H_
 
-#include <boost/lexical_cast.hpp>
 #include <cctype>
 #include <limits>
 #include <iostream>
@@ -32,7 +31,6 @@ using std::numeric_limits;
 using std::string;
 using std::stringstream;
 using std::ostream;
-using boost::lexical_cast;
 
 #define PCL_2D_MAX std::numeric_limits<uint32_t>::max()
 

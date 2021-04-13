@@ -9,7 +9,7 @@ using namespace std;
 typedef std::vector<uint8_t> Data;
 
 string byteToHexString(const uint8_t& b);
-string makeFixedFloatString(float var, int roundDigits);
+string makeFixedString(float var, int roundDigits);
 uint64_t parseUnsignedValue(const Data& data);
 int64_t parseSignedValue(const Data& data);
 
@@ -31,7 +31,7 @@ struct ParamPhys: public Param {
 
 	ParamPhys(const string& name, const float& value, const float& scale,
 			int round_digits, string unit) :
-			Param(name, makeFixedFloatString(value * scale, round_digits)), scale_(
+			Param(name, makeFixedString(value * scale, round_digits)), scale_(
 					scale), roundDigits_(round_digits), unit_(unit) {
 	}
 	string toString() {

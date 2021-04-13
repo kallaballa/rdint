@@ -1,4 +1,6 @@
 #include "Config.hpp"
+#include <getopt.h>
+#include <cstring>
 
 Config* Config::instance = NULL;
 

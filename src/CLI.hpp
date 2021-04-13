@@ -7,9 +7,9 @@
 #include <iostream>
 #include <list>
 #include <SDL/SDL.h>
-#include <boost/lexical_cast.hpp>
-#include <boost/thread.hpp>
-#include <boost/thread/barrier.hpp>
+#include <thread>
+#include <mutex>
+#include <condition_variable>
 #include "CImg.hpp"
 #include "RdPlot.hpp"
 
@@ -20,13 +20,40 @@ using std::endl;
 using std::string;
 using std::list;
 using std::stringstream;
-using boost::lexical_cast;
 
 using namespace cimg_library;
 
+class Barrier {
+public:
+    explicit Barrier(std::size_t iCount) :
+      mThreshold(iCount),
+      mCount(iCount),
+      mGeneration(0) {
+    }
+
+    void wait() {
+        std::unique_lock<std::mutex> lLock{mMutex};
+        auto lGen = mGeneration;
+        if (!--mCount) {
+            mGeneration++;
+            mCount = mThreshold;
+            mCond.notify_all();
+        } else {
+            mCond.wait(lLock, [this, lGen] { return lGen != mGeneration; });
+        }
+    }
+
+private:
+    std::mutex mMutex;
+    std::condition_variable mCond;
+    std::size_t mThreshold;
+    std::size_t mCount;
+    std::size_t mGeneration;
+};
+
 class Debugger {
 public:
-  boost::mutex ia_mutex;
+  std::mutex ia_mutex;
   void* vplotter;
   volatile bool interactive;
   CImgDisplay* canvas_disp;
@@ -34,9 +61,9 @@ public:
   list<off64_t> breakpoints;
   string find;
   string lastCliCmd[2];
-  boost::thread* cli_thrd;
+  std::thread* cli_thrd;
   static Debugger* instance;
-  boost::barrier step_barrier;
+  Barrier step_barrier;
 
   void exec(string cmd, string param) {
     if (cmd.compare("help") == 0) {
@@ -113,7 +140,7 @@ public:
       for (it = breakpoints.begin(); it != breakpoints.end(); it++) {
         bp = *it;
         if (instr->file_off >= bp) {
-          cerr << (format("=== breakpoint (%08X)") % bp) << endl;
+          cerr << "=== breakpoint" << endl;
           setInteractive(true);
           this->step_barrier.wait();
           it = breakpoints.erase(it);
@@ -165,15 +192,17 @@ public:
   }
 
   virtual bool isInteractive() {
-    boost::mutex::scoped_lock ia_lock(ia_mutex);
+    std::unique_lock<std::mutex> ia_lock(ia_mutex);
     return interactive;
   }
 
   virtual void setInteractive(bool i) {
-    boost::mutex::scoped_lock ia_lock(ia_mutex);
+	 std::unique_lock<std::mutex> ia_lock(ia_mutex);
     //FIXME inclomplete sync: old loop still might be reading from cin
     if (!this->interactive && i && this->cli_thrd == NULL)
-     this->cli_thrd = new boost::thread(&Debugger::loop, this->instance);
+     this->cli_thrd = new std::thread([&](){
+    	this->instance->loop();
+    });
 
     this->interactive = i;
   }
@@ -184,7 +213,5 @@ public:
     checkSignatures(instr);
   }
 };
-
-
 
 #endif /* CLI_H_ */

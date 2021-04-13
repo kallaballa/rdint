@@ -2,15 +2,17 @@
 #define PCLFILE_H_
 
 #include <cstdint>
+#include <vector>
 #include <iostream>
-#include <boost/format.hpp>
+#include <sstream>
+#include <iomanip>
+#include <cassert>
 
 using std::cout;
 using std::cerr;
 using std::endl;
 using std::string;
 using std::ostream;
-using boost::format;
 
 // off_t is 64-bit on BSD-derived systems
 #ifdef __APPLE__
@@ -27,10 +29,9 @@ public:
   bool matches(const string& sig, const bool report=false);
   static const string pretty(char c);
   friend ostream& operator <<(ostream &os, const RdInstr &instr) {
-  	format fmtInstr("(%08X)");
-  	fmtInstr % instr.file_off;
-
-  	return os << fmtInstr;
+	std::stringstream ss;
+	ss << std::hex << "0x" << std::setw(8) << std::setfill('0') << instr.file_off;
+	return os << ss.str();
   }
 };
 

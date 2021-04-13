@@ -5,9 +5,9 @@ ifeq ($(UNAME_S), Darwin)
 endif
 
 CXX      := g++
-CXXFLAGS := -pthread -fno-strict-aliasing -std=c++0x -pedantic -Wall `pkg-config --cflags x11 sdl`
+CXXFLAGS := -std=c++20 -pthread -fno-strict-aliasing -std=c++0x -pedantic -Wall `pkg-config --cflags x11 sdl`
 LDFLAGS  := -L/opt/local/lib
-LIBS     := -lpthread -lm `pkg-config --libs x11 sdl` -lboost_system$(BOOST_MT) -lboost_thread$(BOOST_MT)
+LIBS     := -lpthread -lm `pkg-config --libs x11 sdl`
 .PHONY: all release debian-release info debug clean debian-clean distclean 
 DESTDIR := /
 PREFIX := /usr/local

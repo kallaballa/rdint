@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string>
 #include <iostream>
+#include <iomanip>
 #include <sstream>
 #include "CLI.hpp"
 #include "Config.hpp"

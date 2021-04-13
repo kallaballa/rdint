@@ -14,7 +14,7 @@ string byteToHexString(const uint8_t& b) {
 	return ss.str();
 }
 
-string makeFixedFloatString(float var, int roundDigits) {
+string makeFixedString(float var, int roundDigits) {
 	float f = pow(10, roundDigits);
 	float value = (int) (var * f + .5);
 	string strVal = std::to_string(value / 100.0);
