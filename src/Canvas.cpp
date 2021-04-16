@@ -1,10 +1,9 @@
 #include "Canvas.hpp"
 #ifdef PCLINT_USE_SDL
-#include <SDL.h>
+#include <SDL/SDL.h>
 #include <SDL_gfxPrimitives.h>
 #include <SDL_image.h>
 #endif
-#include <SDL/SDL.h>
 
 Canvas::Canvas(dim bedWidth, dim bedHeight, dim screenWidth, dim screenHeight,
     BoundingBox* clip) :

@@ -24,9 +24,9 @@ string byteToHexString2(const uint8_t& b) {
 }
 
 bool RdInstr::matches(const string& sig, const bool report) {
-	bool m = byteToHexString2(this->command.at(0)) == sig;
+	bool m = byteToHexString2(this->data[0]) == sig;
 	if (!m && report && Config::singleton()->debugLevel >= LVL_WARN) {
-		cerr << "expected: " << sig << " found: " << this->command << endl;
+		cerr << "expected: " << sig << " found: " << this->data[0] << endl;
 	}
 	return m;
 }

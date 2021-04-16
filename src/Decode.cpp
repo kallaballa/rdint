@@ -1,3 +1,4 @@
+//Ported from javascript with kind permission by Stefan Schuermans
 #include <src/RdInstr.hpp>
 #include <string>
 #include <vector>

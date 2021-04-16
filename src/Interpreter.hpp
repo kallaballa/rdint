@@ -34,29 +34,25 @@ public:
 	;
 
 	void applyCommand(RdInstr* rdInstr, ProcState* procState, bool print = true) {
-		Debugger::getInstance()->announce(rdInstr);
+		if(Debugger::getInstance())
+			Debugger::getInstance()->announce(rdInstr);
 		if (print && (Config::singleton()->debugLevel >= LVL_DEBUG
 				|| Config::singleton()->interactive)) {
-			cerr << *rdInstr << " -> " << std::hex << std::setfill('0')
-					<< std::setw(2) << (0xFF & (int) rdInstr->command.at(0));
+			cerr << *rdInstr << " ->";
 			for (auto& c : rdInstr->data) {
-				cerr << " " << std::setw(2) << (int) c;
+				cerr << " " << std::hex << std::setfill('0')
+				<< std::setw(2) << (int) c;
 			}
 			cerr << endl;
 		}
-		std::vector<uint8_t> data;
-		data.push_back(rdInstr->command.at(0));
-		for (auto& b : rdInstr->data) {
-			data.push_back(b);
-		}
 
-		CmdBase* cmd = parseCommand(data);
+		CmdBase* cmd = parseCommand(rdInstr->data);
 		if(print)
 			std::cerr << "  " << make_color(cmd->toString(), cmd->getColor()) << std::endl << "> ";
 		cmd->process(*procState);
 	}
 
-	void run(RdPlot *rdPlot) {
+	void run(RdPlot *rdPlot, bool interactive) {
 		RdInstr* rdInstr = nullptr;
 		NullProcState nullPs;
 		std::vector<RdInstr> header;
@@ -71,6 +67,12 @@ public:
 		if (rdInstr == nullptr) {
 			rdPlot->invalidate("End of file reached without any absolute moves(?)");
 		} else {
+		  if (interactive) {
+			Debugger::create(vectorPlotter);
+			Debugger::getInstance()->setInteractive(true);
+		  } else {
+			Debugger::create();
+		  }
 			Statistic::init(nullPs.maxX, nullPs.maxY, 100);
 			this->vectorPlotter = new VectorPlotter(nullPs.maxX, nullPs.maxY,
 					Config::singleton()->clip);

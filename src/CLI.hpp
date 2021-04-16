@@ -176,7 +176,7 @@ public:
 
   virtual void loop() {
     string line;
-
+		cerr << "type 'help' for a list of available commands." << endl << "> ";
     while (cin) {
       getline(cin, line);
       stringstream ss(line);

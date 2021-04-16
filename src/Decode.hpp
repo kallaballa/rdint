@@ -162,7 +162,6 @@ public:
 			minX = x;
 			minY = y;
 		}
-		std::cerr << "MAXX: " << maxX << std::endl;
 		 float dx = maxX - minX;
 		 float dy = maxY - minY;
 		 if (dx < 1) { dx = 1; }

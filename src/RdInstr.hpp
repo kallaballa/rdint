@@ -21,8 +21,7 @@ typedef off_t off64_t;
 
 class RdInstr {
 public:
-  RdInstr(off64_t file_off) : command(), data(), file_off(file_off) {}
-  string command;
+  RdInstr(off64_t file_off) : data(), file_off(file_off) {}
   std::vector<uint8_t> data;
   off64_t file_off;
 

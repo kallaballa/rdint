@@ -44,7 +44,7 @@ private:
 		uint8_t c = descramble(this->inputfile->get());
 		assert(c >= 0x80);
 		RdInstr* instr = new RdInstr(off);
-		instr->command = c;
+		instr->data.push_back(c);
 
 		while (this->inputfile->good()
 				&& (c = descramble(this->inputfile->get())) < 0x80) {

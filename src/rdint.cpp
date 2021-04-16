@@ -52,13 +52,8 @@ int main(int argc, char *argv[]) {
   RdPlot* plot = new RdPlot(infile);
 
   Interpreter intr;
-  if (config->interactive) {
-    Debugger::create(intr.vectorPlotter);
-    Debugger::getInstance()->setInteractive(true);
-  } else
-    Debugger::create();
 
-  intr.run(plot);
+  intr.run(plot, config->interactive);
 
   BoundingBox& vBox = intr.vectorPlotter->getBoundingBox();
   if (vBox.isValid()) {
