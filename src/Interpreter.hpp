@@ -38,7 +38,7 @@ public:
 			Debugger::getInstance()->announce(rdInstr);
 		if (print && (Config::singleton()->debugLevel >= LVL_DEBUG
 				|| Config::singleton()->interactive)) {
-			cerr << *rdInstr << " ->";
+			cerr << std::dec << "[" << procState->x << ',' << procState->y << "] " << *rdInstr << " ->";
 			for (auto& c : rdInstr->data) {
 				cerr << " " << std::hex << std::setfill('0')
 				<< std::setw(2) << (int) c;
