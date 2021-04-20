@@ -60,8 +60,8 @@ public:
 			header.push_back(*rdInstr);
 			applyCommand(rdInstr, &nullPs, false);
 
-			if (rdInstr->matches("88"))
-				break;
+//			if (rdInstr->matches("88"))
+//				break;
 		}
 
 		if (rdInstr == nullptr) {

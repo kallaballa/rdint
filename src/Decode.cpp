@@ -162,7 +162,7 @@ struct CmdCoords: CmdGood {
 	}
 
 	virtual void process(ProcState& procState) override {
-		procState.setLimits(isMax, x / 100.0, y / 100.0);
+		procState.setLimits(isMax, x, y);
 	}
 };
 
@@ -593,20 +593,15 @@ CmdBase* parseCommand(Data& data) {
 
 void VectorProcState::cut(const coord& x1, const coord& y1, const coord& x2,
 		const coord& y2) {
-	coord xs1 = x1 * scale;
-	coord ys1 = y1 * scale;
-	coord xs2 = x2 * scale;
-	coord ys2 = y2 * scale;
-
-	if(vplot_.penPos != Point(xs1, ys1)) {
+	if(vplot_.penPos != Point(x1, y1)) {
 		if(vplot_.isPenDown())
 			vplot_.penUp();
 
-		vplot_.move(xs1, ys1);
+		vplot_.move(x1, y1);
 	}
 
 	if(!vplot_.isPenDown())
 		vplot_.penDown();
 
-	vplot_.move(xs2, ys2);
+	vplot_.move(x2, y2);
 }

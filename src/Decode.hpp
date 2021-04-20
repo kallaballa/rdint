@@ -83,15 +83,20 @@ struct ProcState {
 			const coord& y) = 0;
 
 	void cutAbs(const coord& x, const coord& y) {
-		this->cut(this->x, this->y, x, y);
-		this->x = x;
-		this->y = y;
+		coord xs = x / 1000.0;
+		coord ys = y / 1000.0;
+		this->cut(this->x, this->y, xs, ys);
+		this->x = xs;
+		this->y = ys;
 	}
 
 	void cutRel(const coord& x, const coord& y) {
-		this->cut(this->x, this->y, this->x + x, this->y + y);
-		this->x += x;
-		this->y += y;
+		coord xs = x / 1000.0;
+		coord ys = y / 1000.0;
+
+		this->cut(this->x, this->y, this->x + xs, this->y + ys);
+		this->x += xs;
+		this->y += ys;
 	}
 
 	Layer& getLayer(int16_t layerNo) {
@@ -105,13 +110,13 @@ struct ProcState {
 	}
 
 	void moveAbs(const coord& x, const coord& y) {
-		this->x = x;
-		this->y = y;
+		this->x = x / 1000.0;
+		this->y = y / 1000.0;
 	}
 
 	void moveRel(const coord& x, const coord& y) {
-		this->x += x;
-		this->y += y;
+		this->x += x / 1000.0;
+		this->y += y / 1000.0;
 	}
 
 	void setLayerColor(int16_t layerNo, uint8_t red, uint8_t green,
@@ -144,7 +149,6 @@ struct ProcState {
 };
 
 class NullProcState: public ProcState {
-	float scale = 0;
 public:
 	NullProcState() {
 	}
@@ -162,28 +166,12 @@ public:
 			minX = x;
 			minY = y;
 		}
-		 float dx = maxX - minX;
-		 float dy = maxY - minY;
-		 if (dx < 1) { dx = 1; }
-		 if (dy < 1) { dy = 1; }
-		 if(Config::singleton()->screenSize != nullptr) {
-			 float width = Config::singleton()->screenSize->ul.x;
-			 float height = Config::singleton()->screenSize->ul.y;
-
-			 float scaleX = width / dx;
-			 float scaleY = height / dy;
-			 scale = scaleX < scaleY ? scaleX : scaleY;
-			 scale /= 100;
-		 } else {
-			 scale = 0.01;
-		 }
 	}
 };
 
 class VectorPlotter;
 class VectorProcState: public ProcState {
 	VectorPlotter& vplot_;
-	float scale = 0;
 public:
 	VectorProcState(VectorPlotter& vplot) :
 			vplot_(vplot) {
@@ -201,23 +189,6 @@ public:
 			minX = x;
 			minY = y;
 		}
-
-		 float dx = maxX - minX;
-		 float dy = maxY - minY;
-		 if (dx < 1) { dx = 1; }
-		 if (dy < 1) { dy = 1; }
-
-		 if(Config::singleton()->screenSize != nullptr) {
-			 float width = Config::singleton()->screenSize->ul.x;
-			 float height = Config::singleton()->screenSize->ul.y;
-
-			 float scaleX = width / dx;
-			 float scaleY = height / dy;
-			 scale = scaleX < scaleY ? scaleX : scaleY;
-			 scale /= 100;
-		 } else {
-			 scale = 0.01;
-		 }
 	}
 };
 
