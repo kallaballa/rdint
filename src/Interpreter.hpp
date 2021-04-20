@@ -83,10 +83,13 @@ public:
 			while (rdPlot->good() && (rdInstr = rdPlot->expectInstr())) {
 				applyCommand(rdInstr, &vecPs);
 			}
-			std::cerr << make_bold("End of file. Type any key to exit.")
-					<< std::endl;
-			char c;
-			std::cin.read(&c, 1);
+
+			if(interactive) {
+				std::cerr << make_bold("End of file. Type any key to exit.")
+						<< std::endl;
+				char c;
+				std::cin.read(&c, 1);
+			}
 		}
 	}
 };
