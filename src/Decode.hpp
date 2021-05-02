@@ -160,11 +160,11 @@ public:
 	virtual void setLimits(const bool& isMax, const coord& x, const coord& y)
 			override {
 		if (isMax) {
-			maxX = x;
-			maxY = y;
+			maxX = x / 1000.0;
+			maxY = y / 1000.0;
 		} else {
-			minX = x;
-			minY = y;
+			minX = x / 1000.0;
+			minY = y / 1000.0;
 		}
 	}
 };
@@ -183,11 +183,11 @@ public:
 	virtual void setLimits(const bool& isMax, const coord& x, const coord& y)
 			override {
 		if (isMax) {
-			maxX = x;
-			maxY = y;
+			maxX = x / 1000.0;
+			maxY = y / 1000.0;
 		} else {
-			minX = x;
-			minY = y;
+			minX = x / 1000.0;
+			minY = y / 1000.0;
 		}
 	}
 };

@@ -64,6 +64,7 @@ public:
   std::thread* cli_thrd;
   static Debugger* instance;
   Barrier step_barrier;
+  bool run = true;
 
   void exec(string cmd, string param) {
     if (cmd.compare("help") == 0) {
@@ -177,7 +178,7 @@ public:
   virtual void loop() {
     string line;
 		cerr << "type 'help' for a list of available commands." << endl << "> ";
-    while (cin) {
+    while (run && cin) {
       getline(cin, line);
       stringstream ss(line);
       string cmd;
@@ -189,6 +190,8 @@ public:
       } else
         exec(lastCliCmd[0], lastCliCmd[1]);
     }
+    SDL_Quit();
+    exit(0);
   }
 
   virtual bool isInteractive() {
@@ -205,6 +208,10 @@ public:
     });
 
     this->interactive = i;
+  }
+
+  virtual void quit() {
+	  run = false;
   }
 
   virtual void announce(RdInstr* instr) {
