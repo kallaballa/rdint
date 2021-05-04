@@ -71,7 +71,7 @@ struct ProcState {
 	coord minY = 0;
 	dim pwr = 0;
 	dim speed = 0;
-	coord x = 0;
+	coord x = 1300;
 	coord y = 0;
 
 	ProcState() {

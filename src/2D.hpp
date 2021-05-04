@@ -15,7 +15,7 @@ using std::ostream;
 
 #define PCL_2D_MAX std::numeric_limits<uint32_t>::max()
 
-typedef int64_t coord;
+typedef double coord;
 typedef uint64_t dim;
 
 class Point {

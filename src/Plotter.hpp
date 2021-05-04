@@ -29,16 +29,16 @@ public:
   Point penPos;
 
   VectorPlotter(dim width, dim height, BoundingBox* clip = NULL) :
-    clip(clip), down(false), penPos(0, 0) {
+    clip(clip), down(false), penPos(1300, 0) {
     if (clip != NULL) {
       width = clip->min(width, clip->lr.x - clip->ul.x);
       height = clip->min(height, clip->lr.y - clip->ul.y);
     }
     intensity[0] = 255;
     if(Config::singleton()->screenSize != NULL)
-      this->canvas = new Canvas(width, height, Config::singleton()->screenSize->ul.x, Config::singleton()->screenSize->ul.y);
+      this->canvas = new Canvas(width * 10, height * 10, Config::singleton()->screenSize->ul.x, Config::singleton()->screenSize->ul.y);
     else
-      this->canvas = new Canvas(width, height);
+      this->canvas = new Canvas(width * 10, height * 10);
   }
 
   VectorPlotter(BoundingBox* clip = NULL) :
@@ -104,7 +104,11 @@ public:
   }
 
   void move(Point& to) {
-    if (penPos != to) {
+	  Point tos = to;
+	  tos.x *= 10.0;
+	  tos.y *= 10.0;
+
+	  if (penPos != to) {
       if (down) {
         draw(penPos, to);
         Statistic::singleton()->announceWork(penPos, to, SLOT_VECTOR);
@@ -179,33 +183,33 @@ public:
   }
 
   void fill(uint8_t bitmap, int len) {
-    int dir = (len < 0) ? -1 : 1;
-    Point pos = this->penPos;
-    Point from = pos;
-    from.x *= 8;
-    Point to = from;
-    int delta = (len * 8) - (1 * dir);
-    if (int(from.x) + delta < 0) {
-      Debugger::getInstance()->waitSteps();
-      if (!Debugger::getInstance()->isInteractive()) assert(false);
-    }
-    to.x += delta;
-
-    Statistic::singleton()->announcePenDown(SLOT_RASTER);
-    Statistic::singleton()->announceWork(from, to, SLOT_RASTER);
-
-    if (this->clip) {
-      if (this->penPos.y < this->clip->ul.y || this->penPos.y > this->clip->lr.y) return;
-      pos.x -= this->clip->ul.x;
-      pos.y -= this->clip->ul.y;
-    }
-    for (int i=0;i<abs(len);i++) {
-      if (this->clip) {
-        if ((this->penPos.x + i) < this->clip->ul.x || (this->penPos.x + i) > this->clip->lr.x) return;
-      }
-     this->imgbuffer[pos.y * this->width + pos.x + i*dir] = bitmap;
-    }
-    Statistic::singleton()->announcePenUp(SLOT_RASTER);
+//    int dir = (len < 0) ? -1 : 1;
+//    Point pos = this->penPos;
+//    Point from = pos;
+//    from.x *= 8;
+//    Point to = from;
+//    int delta = (len * 8) - (1 * dir);
+//    if (int(from.x) + delta < 0) {
+//      Debugger::getInstance()->waitSteps();
+//      if (!Debugger::getInstance()->isInteractive()) assert(false);
+//    }
+//    to.x += delta;
+//
+//    Statistic::singleton()->announcePenDown(SLOT_RASTER);
+//    Statistic::singleton()->announceWork(from, to, SLOT_RASTER);
+//
+//    if (this->clip) {
+//      if (this->penPos.y < this->clip->ul.y || this->penPos.y > this->clip->lr.y) return;
+//      pos.x -= this->clip->ul.x;
+//      pos.y -= this->clip->ul.y;
+//    }
+//    for (int i=0;i<abs(len);i++) {
+//      if (this->clip) {
+//        if ((this->penPos.x + i) < this->clip->ul.x || (this->penPos.x + i) > this->clip->lr.x) return;
+//      }
+//     this->imgbuffer[pos.y * this->width + pos.x + i*dir] = bitmap;
+//    }
+//    Statistic::singleton()->announcePenUp(SLOT_RASTER);
   }
 
   virtual BoundingBox& getBoundingBox() {
@@ -213,33 +217,33 @@ public:
   }
 
   void dumpCanvas(const string& filename) {
-    BoundingBox bbox = getBoundingBox();
-    if(bbox.isValid()) {
-      Point start(0,0);
-      Point size(this->width * 8, this->height);
-      if (Config::singleton()->autocrop) {
-        start.x = bbox.ul.x;
-        start.y = bbox.ul.y;
-
-        size.x = bbox.lr.x - bbox.ul.x + 1;
-        size.y = bbox.lr.y - bbox.ul.y + 1;
-      }
-
-      CImg<uint8_t>* canvas = new CImg<uint8_t>(size.x, size.y, 1, 1, 255);
-
-      uint8_t on = 0;
-      for (uint32_t y=0;y<size.y;y++) {
-        for (uint32_t x=0;x<(size.x/8);x++) {
-          uint8_t bitmap = this->imgbuffer[(y + start.y)*this->width + (x + start.x/8)];
-          for (int b=0;b<8;b++) {
-            if ((bitmap & (0x80 >> b))) {
-              canvas->draw_point(x*8 + b, y, &on);
-            }
-          }
-        }
-      }
-      canvas->save(filename.c_str());
-    }
+//    BoundingBox bbox = getBoundingBox();
+//    if(bbox.isValid()) {
+//      Point start(0,0);
+//      Point size(this->width * 8, this->height);
+//      if (Config::singleton()->autocrop) {
+//        start.x = bbox.ul.x;
+//        start.y = bbox.ul.y;
+//
+//        size.x = bbox.lr.x - bbox.ul.x + 1;
+//        size.y = bbox.lr.y - bbox.ul.y + 1;
+//      }
+//
+//      CImg<uint8_t>* canvas = new CImg<uint8_t>(size.x, size.y, 1, 1, 255);
+//
+//      uint8_t on = 0;
+//      for (uint32_t y=0;y<size.y;y++) {
+//        for (uint32_t x=0;x<(size.x/8);x++) {
+//          uint8_t bitmap = this->imgbuffer[(y + start.y)*this->width + (x + start.x/8)];
+//          for (int b=0;b<8;b++) {
+//            if ((bitmap & (0x80 >> b))) {
+//              canvas->draw_point(x*8 + b, y, &on);
+//            }
+//          }
+//        }
+//      }
+//      canvas->save(filename.c_str());
+//    }
   }
 };
 

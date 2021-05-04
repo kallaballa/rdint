@@ -71,7 +71,7 @@ void Canvas::drawLine(coord x0, coord y0, coord x1, coord y1) {
 }
 
 void Canvas::drawCut(coord x0, coord y0, coord x1, coord y1) {
-  offscreen.draw_line(x0, y0, x1, y1, this->intensity);
+  offscreen.draw_line(x0 * 10, y0 * 10, x1 * 10, y1 * 10, this->intensity);
 #ifdef PCLINT_USE_SDL
   checkExit();
   if(screen != NULL) {

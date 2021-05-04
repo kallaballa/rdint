@@ -32,10 +32,10 @@ private:
   static Statistic* instance;
 
 public:
-  static Statistic* init(uint32_t width, uint32_t height, uint16_t resolution);
+  static Statistic* init(uint32_t width, uint32_t height, double resolution);
   static Statistic* singleton();
 
-  Statistic(uint32_t width, uint32_t height, uint16_t resolution) : width(width), height(height), slots(new Slot[2]),  in_factor(10 / resolution), mm_factor(25.5/ resolution){
+  Statistic(uint32_t width, uint32_t height, uint16_t resolution) : width(width), height(height), slots(new Slot[2]),  in_factor(10 / resolution), mm_factor(25.4 / resolution){
     slots[SLOT_RASTER] = *(new Slot());
     slots[SLOT_VECTOR] = *(new Slot());
   };
@@ -49,8 +49,15 @@ public:
   void announceWork(const Point& from, const Point& to, const STAT_SLOT slot) {
     slots[slot].workLen += distance(from, to);
     slots[slot].segmentCnt++;
-    slots[slot].bbox.update(from);
-    slots[slot].bbox.update(to);
+    Point froms = from;
+    Point tos  = to;
+    froms.x *= 10.0;
+    froms.y *= 10.0;
+    tos.x *= 10.0;
+    tos.y *= 10.0;
+
+    slots[slot].bbox.update(froms);
+    slots[slot].bbox.update(tos);
   }
 
   void announceMove(const Point& from, const Point& to, const STAT_SLOT slot) {

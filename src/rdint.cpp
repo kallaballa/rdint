@@ -36,7 +36,7 @@ Debugger* Debugger::getInstance() {
 
 Statistic* Statistic::instance = NULL;
 Statistic* Statistic::init(uint32_t width, uint32_t height,
-		uint16_t resolution) {
+		double resolution) {
 	assert(instance == NULL);
 	return instance = new Statistic(width, height, resolution);
 }
