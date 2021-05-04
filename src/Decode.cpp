@@ -593,7 +593,6 @@ CmdBase* parseCommand(Data& data) {
 
 void VectorProcState::cut(const coord& x1, const coord& y1, const coord& x2,
 		const coord& y2) {
-	std::cerr << std::dec << Point(x1,y1) << " -> " << Point(x2,y2) << std::hex << std::endl;
   	if(vplot_.penPos != Point(x1, y1)) {
 		if(vplot_.isPenDown())
 			vplot_.penUp();
