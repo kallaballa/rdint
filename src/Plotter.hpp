@@ -104,10 +104,6 @@ public:
   }
 
   void move(Point& to) {
-	  Point tos = to;
-	  tos.x *= 10.0;
-	  tos.y *= 10.0;
-
 	  if (penPos != to) {
       if (down) {
         draw(penPos, to);

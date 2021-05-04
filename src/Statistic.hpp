@@ -49,12 +49,13 @@ public:
   void announceWork(const Point& from, const Point& to, const STAT_SLOT slot) {
     slots[slot].workLen += distance(from, to);
     slots[slot].segmentCnt++;
+
     Point froms = from;
-    Point tos  = to;
-    froms.x *= 10.0;
-    froms.y *= 10.0;
-    tos.x *= 10.0;
-    tos.y *= 10.0;
+    Point tos = to;
+    froms.x *= 10;
+    froms.y *= 10;
+    tos.x *= 10;
+    tos.y *= 10;
 
     slots[slot].bbox.update(froms);
     slots[slot].bbox.update(tos);
@@ -133,6 +134,11 @@ public:
       BoundingBox& globalBBox = *(new BoundingBox());
       globalBBox += slots[0].bbox;
       globalBBox += slots[1].bbox;
+      globalBBox.ul.x *= 10;
+      globalBBox.ul.y *= 10;
+      globalBBox.lr.x *= 10;
+      globalBBox.lr.y *= 10;
+
       return globalBBox;
     }
   }
