@@ -19,7 +19,8 @@ struct Param {
 	Param(const string& name, const string& value) :
 			name_(name), value_(value) {
 	}
-	string toString() {
+
+	virtual string toString() {
 		return name_ + " " + value_;
 	}
 };
@@ -34,7 +35,8 @@ struct ParamPhys: public Param {
 			Param(name, makeFixedString(value * scale, round_digits)), scale_(
 					scale), roundDigits_(round_digits), unit_(unit) {
 	}
-	string toString() {
+
+	virtual string toString() override {
 		return name_ + " " + value_ + " " + unit_;
 	}
 };
@@ -83,7 +85,7 @@ struct ProcState {
 			const coord& y) = 0;
 
 	void cutAbs(const coord& x, const coord& y) {
-		coord xs = x / 1000.0;
+		coord xs = 1300 - (x / 1000.0);
 		coord ys = y / 1000.0;
 		this->cut(this->x, this->y, xs, ys);
 		this->x = xs;
@@ -91,7 +93,7 @@ struct ProcState {
 	}
 
 	void cutRel(const coord& x, const coord& y) {
-		coord xs = x / 1000.0;
+		coord xs = 1300 - (x / 1000.0);
 		coord ys = y / 1000.0;
 
 		this->cut(this->x, this->y, this->x + xs, this->y + ys);
@@ -110,12 +112,12 @@ struct ProcState {
 	}
 
 	void moveAbs(const coord& x, const coord& y) {
-		this->x = x / 1000.0;
+		this->x = 1300 - (x / 1000.0);
 		this->y = y / 1000.0;
 	}
 
 	void moveRel(const coord& x, const coord& y) {
-		this->x += x / 1000.0;
+		this->x += 1300 - (x / 1000.0);
 		this->y += y / 1000.0;
 	}
 
@@ -160,10 +162,10 @@ public:
 	virtual void setLimits(const bool& isMax, const coord& x, const coord& y)
 			override {
 		if (isMax) {
-			maxX = x / 1000.0;
+			maxX = 1300 - (x / 1000.0);
 			maxY = y / 1000.0;
 		} else {
-			minX = x / 1000.0;
+			minX = 1300 - (x / 1000.0);
 			minY = y / 1000.0;
 		}
 	}
@@ -183,10 +185,10 @@ public:
 	virtual void setLimits(const bool& isMax, const coord& x, const coord& y)
 			override {
 		if (isMax) {
-			maxX = x / 1000.0;
+			maxX = 1300 - (x / 1000.0);
 			maxY = y / 1000.0;
 		} else {
-			minX = x / 1000.0;
+			minX = 1300 - (x / 1000.0);
 			minY = y / 1000.0;
 		}
 	}

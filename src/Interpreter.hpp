@@ -73,7 +73,7 @@ public:
 		  } else {
 			Debugger::create();
 		  }
-			Statistic::init(nullPs.maxX, nullPs.maxY, 100);
+			Statistic::init(nullPs.maxX, nullPs.maxY, 1);
 			this->vectorPlotter = new VectorPlotter(nullPs.maxX, nullPs.maxY,
 					Config::singleton()->clip);
 			VectorProcState vecPs(*this->vectorPlotter);

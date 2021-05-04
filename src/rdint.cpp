@@ -38,7 +38,7 @@ Statistic* Statistic::instance = NULL;
 Statistic* Statistic::init(uint32_t width, uint32_t height,
 		uint16_t resolution) {
 	assert(instance == NULL);
-	return instance = new Statistic(width, height, 100);
+	return instance = new Statistic(width, height, resolution);
 }
 
 Statistic* Statistic::singleton() {
