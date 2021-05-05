@@ -1,8 +1,8 @@
 #include "Canvas.hpp"
 #ifdef PCLINT_USE_SDL
 #include <SDL/SDL.h>
-#include <SDL_gfxPrimitives.h>
-#include <SDL_image.h>
+#include <SDL/SDL_gfxPrimitives.h>
+#include <SDL/SDL_image.h>
 #endif
 
 Canvas::Canvas(dim bedWidth, dim bedHeight, dim screenWidth, dim screenHeight,
@@ -30,8 +30,8 @@ Canvas::Canvas(dim bedWidth, dim bedHeight, dim screenWidth, dim screenHeight,
   }
   intensity[0] = 0;
 
-  double scale_x = (double) screenWidth / (double) bedWidth;
-  double scale_y = (double) screenHeight / (double) bedHeight;
+  double scale_x = (double) screenWidth / (double) (bedWidth / 10);
+  double scale_y = (double) screenHeight / (double) (bedHeight / 10);
 
   scale = std::min(scale_x, scale_y);
 }
