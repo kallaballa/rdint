@@ -8,10 +8,9 @@ Options:
   -i                Enter interactive mode
   -a                Automatically crop the output image to the detected bounding box
   -c <bbox>         Clip to given bounding box
-  -v <filename>     Output the vector pass to the given filename
-  -r <filename>     Output the raster pass to the given filename
+  -v <filename>     Output the cut pass to the given filename
   -d <level>        Set the verbosity level (quiet/info/warn/debug)
-  -s <dimension>    Configure the size of the live rendering window. e.g. 1024x768
+  -s <dimension>    Configure the size of the live rendering window. e.g. 1300x900
 ```
 
 ## Dependencies
