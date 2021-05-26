@@ -1,4 +1,6 @@
-# Usage
+# An interpreter and renderer for RUIDA rd-files
+
+## Usage
 ```
 Usage: rdint [options] <RD-file> [<output file>]
 
@@ -12,15 +14,15 @@ Options:
   -s <dimension>    Configure the size of the live rendering window. e.g. 1024x768
 ```
 
-# Dependencies
+## Dependencies
 X11, SDL, SDL_gfx
 
-# Build
+## Build
 ```
 make -j8
 ```
 
-# Install
+## Install
 ```
 sudo make install
 ```
